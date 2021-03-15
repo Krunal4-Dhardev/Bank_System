@@ -1,0 +1,36 @@
+.tranding-img
+{
+    height:200px;
+    margin-left: 8%;
+    margin-top: 2%;
+    margin-bottom: 20%;
+}
+.capcha
+{
+    width:60px;
+}
+footer {
+    clear: both;
+    position: bottom;
+    height: 125px;
+    width:98%;
+    margin-top: 200px;
+}
+.nav-right
+{
+  padding-right: 10px;
+}   
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: red;
+  color: white;
+  text-align: center;
+  margin-top:200px;
+}
+a
+{
+  text-decoration: none;
+}
