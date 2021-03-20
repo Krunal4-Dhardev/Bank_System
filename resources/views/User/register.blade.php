@@ -1,6 +1,9 @@
 @extends('user.master')
 @section('content')
         <div class="container">
+            @if(session('Error'))
+                <h4 style="color:red" class="flash">{{session('Error')}}</h4>
+            @endif
             <div class="row">
                 <div class="col-sm-4 col-sm-offset-4">
                     <form action="register" method="post">

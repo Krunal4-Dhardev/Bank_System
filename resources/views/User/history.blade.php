@@ -18,16 +18,22 @@
     </thead>
     <tbody>
         
-        @foreach($result,$user,$user2 as $item)
-   
+        @foreach($result as $item)
+                  
         <tr>
-        <th scope="row"></th>
-        <td>{{$item['Fname']}}     {{$item['Lname']}}</td>
-        <td></td>
-        <td>{{$item['amount']}}</td>
-        <td>{{$item['Description']}}</td>
-        <td>{{$item['Type']}}</td>
-        <td>{{$item['updated_at']}}</td>
+            <th scope="row">{{$item['id']}}</th>
+            <td>{{session::get('user')['Fname']}}&nbsp;{{session::get('user')['Lname']}}</td>
+            <?php $user2=DB::table('users')->where(['id'=>$item['touserid']])->first();?>
+            @if($user2) 
+                <td>{{$user2->Fname}} &nbsp;{{ $user2->Lname }}</td>
+            @else
+                <td>Bank</td>
+            @endif
+
+            <td>{{$item['amount']}}</td>
+            <td>{{$item['Description']}}</td>
+            <td>{{$item['Type']}}</td>
+            <td>{{$item['updated_at']}}</td>
         </tr>
         @endforeach
     </tbody>

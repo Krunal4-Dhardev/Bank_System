@@ -29,26 +29,41 @@ class UserController extends Controller
     
     function register(Request $req)
     {  
-        function randomDigits($length){
-           $digits = '';
+
+        if(!$req->pwd == $req->cpwd)
+        {
+            $data=$request->session()->flash('Error',"Sorry Password And Conformed Password Field Should be Same :-) ");
+            return redirect('register');   
+        }
+        //GENERATE RANDOM 10 DIGIT ACCOUNT NUMBER 
+        function randomDigits($length)
+        {           
+            $digits = '';
            $numbers = range(0,9);
            shuffle($numbers);
+          
            for($i = 0; $i < $length; $i++)
            {
                global $digits;
                $digits .= $numbers[$i];
            }
+          
            return $digits;
         }
-        function random($length){
+
+         //GENERATE RANDOM 4 DIGIT PIN NUMBER 
+        function random($length)
+        {
             $pin = '';
             $num = range(0,9);
             shuffle($num);
+        
             for($i = 0; $i < $length; $i++)
             {
                 global $pin;
                 $pin .= $num[$i];
             }
+        
             return $pin;
         }
 
@@ -76,6 +91,6 @@ class UserController extends Controller
 
         //PASS THE CURRENT USER INFORMATION TO CREATE ACCOUNT PAGE
         $data   =   user::where('email',$req->input('email'))->get();
-        return view('/user/registeraccount',['user_id'=>$data,'account_no'=>$account_number,'pin_no'=>$pin]);
+       return view('/user/registeraccount',['user_id'=>$data,'account_no'=>$account_number,'pin_no'=>$pin]);
     }
 }

@@ -17,6 +17,11 @@ class transferMoneyController extends Controller
         return view('user/transfermoney');
     }
 
+    public function showBalance()
+    {
+        $balance=Balance::where(['userid'=>session::get('user')['id']])->get();
+        return view('user/showBalance',['Balance'=>$balance]);
+    }
     public function captchaValidate(Request $request)
     {
         $rule=array(
@@ -31,12 +36,14 @@ class transferMoneyController extends Controller
         //IF NOT VALID RETURN AGAIN TRANSFTER MONEY PAGE
         if($validator->fails())
         {
-            return view('user/transfermoney',['Result'=>"Invallid aptcha Code Please Try Again"]);
+            $data=$request->session()->flash('Error',"Invalid Captcha Code Please Try Again :-)");
+            return redirect('transfermoney');   
         }
         else
         {
             //GET THE ACCOUNT NUMBER AN FIND WHO'S ACCOUNT IS
             $account=Account::where(['Account_no'=>$request->accountNumber])->first();
+            
 
            
             if($account)
@@ -50,7 +57,8 @@ class transferMoneyController extends Controller
                 //CHECK BALANCE IS AVAILABLE OR NOT 
                 if($request->Amount > $balance['Balance'])
                 {
-                    return "Sorry Not Sufficient Balance For this transaction ";
+                    $data=$request->session()->flash('Error',"Sorry Not Sufficient Balance For this transaction :-( ");
+                    return redirect('transfermoney');   
                 }
                 else{
                     //MAKE TRANSACTION HISTORY FOR WHO SENDING MONEY
@@ -96,22 +104,25 @@ class transferMoneyController extends Controller
                         else
                         {
                             //RETURN FASE IF TRANSACTION AMOUNT WILL NOT CREDIT OR USER INFORMATION WILL NOT FIND
-                            return "Somthing Wrong";
+                            $data=$request->session()->flash('Error',"Sorry Somthing Wrong Please Try Again");
+                            return redirect('transfermoney');   
                         }
 
                     }
                     else
                     {
                         //IF USER DATA WILL NOT FIND THEN TRANSACTION WILL FAIELD
-                        $transaction=Transaction;
-                        return "Somthing Wrong in This Trantions";
+                        $data=$request->session()->flash('Error',"Sorry Somthing Wrong Please Try Again");
+                        return redirect('transfermoney');   
                     }
                 }
             }
             else
             {
                 //RETURN IF USER ACCOUNT NUMBER IS WRONG 
-                return "There is somthing is wrong in account number please check agian ";
+                $data=$request->session()->flash('Error',"There Is Somthing Wrong in Account Number Please Check Again");
+                return redirect('transfermoney');
+               
             }	
             
         }

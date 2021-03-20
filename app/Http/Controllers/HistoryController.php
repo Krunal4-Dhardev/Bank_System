@@ -15,14 +15,19 @@ class HistoryController extends Controller
     function history()
     {
         $transaction=DB::table('transactions')->where(['userid'=>session::get('user')['id']])->get();
-        return $transaction['id'];
+       
 
         $result = json_decode($transaction, true);
-        $user=DB::table('users')->where(['id'=>$result['userid']])->get();
-        
-        $user2=DB::table('users')->where(['id'=>$result['touserid']])->get();
-
-        
-        return view('user.history',['result'=>$result,'user'=>$user,'user2'=>$user2]);
+       
+        $user=DB::table('users')->where(['id'=>$result[0]['userid']])->get();
+       
+            // return $user2;
+    //    $data=[
+    //        'transaction'=>$result,
+    //        'user'=>$user,
+    //        'user2'=>$user2
+    //    ];
+       // return $data['transaction'];
+        return view('user.history',['result'=>$result]);
     }
 }

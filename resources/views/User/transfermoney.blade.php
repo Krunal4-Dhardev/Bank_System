@@ -8,7 +8,12 @@
 ?>
 
 @section('content')
+
     <div class="continer">
+        @if(session('Error'))
+            <h4 style="color:red" class="flash">{{session('Error')}}</h4>
+        @endif
+        
         <form method="post" action="captcha">
             @csrf
             <div class="row">
@@ -66,5 +71,7 @@
                         <button type="submit" class="btn btn-success">Send</button>
                     </div>
             </div>
+        </form>
+    </div>
 @endsection
 

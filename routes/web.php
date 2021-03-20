@@ -46,11 +46,8 @@ Route::get('/registeraccount',function()
     return view('user/registeraccount');
 });
 
-Route::get('showBalance',function()
-{
-    return view('user.showBalance');
-});
-
+Route::get('/showBalance',[transferMoneyController::class,'showBalance']);
+Route::get('/history',[HistoryController::class,'history']);
 Route::get('/transfermoney',[transferMoneyController::class,'create']);
 Route::get('/refreshcaptcha',[transferMoneyController::class,'refreshcaptcha']);
 Route::post('/captcha',[transferMoneyController::class,'captchaValidate']);
@@ -58,4 +55,3 @@ Route::post('/register',[UserController::class,'register']);
 Route::post('/login',[UserController::class,'login']);
 Route::post('/registeraccount',[AccountController::class,'accountInfo']);
 Route::post('/deposit',[DepositController::class,'deposit']);
-Route::get('/history',[HistoryController::class,'history']);
